@@ -12,4 +12,10 @@ export class ProductService {
   getAll():Product[] {
     return sample_products;
   }
+  
+  getAllProductsSearchTerm(searchTerm:string) { 
+    return this.getAll().filter(
+      product => product.name.toLowerCase().
+      includes(searchTerm.toLowerCase()))
+  }
 }

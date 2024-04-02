@@ -8,11 +8,13 @@ ul{
 }
 
 li a{
-    height: 30.5rem;
+    height: 29.5rem;
     width: 13rem;
     border: 1px solid wheat;
     border-radius: 1rem;
-    margin: 0.5rem;
+    margin-top: 1.2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -30,7 +32,7 @@ li a img{
 }
 
 .content{
-    margin-top: 0.3rem;
+    margin-top: 0rem;
     padding: 0.5rem 1rem;
     position: relative;
     height: 8rem;
