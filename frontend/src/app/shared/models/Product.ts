@@ -9,4 +9,5 @@ export class Product {
     description!: string;
     state!: string[];
     material!: string[];
+    tags?: string[];
 }

@@ -8,7 +8,11 @@
 2. `ng g c components/partials/header` (création de dossiers afin de mieux s'y retrouver).
 3. Appelé le component header dans le fichier `app.component.html` afin de créer la vue header. 
 `<app-header></app-header>`
+  I. HTML : 
+  ![header-html-part1](/assets/header-html-part1.png)
 4. Ajouter du CSS pour le style.
+  I. Visuellement : 
+  ![header-naviguateur](/assets/header-navigateur.png)
 ## Models
 1. Model Produits
 2. Création de data.ts histoire d'avoir des datas pour l'instant avec quoi travailler.
@@ -27,7 +31,7 @@
 6. Créer un premier visuel dans le component Home en appelant les données du fichier `data.ts` en se basant sur le model `Product.ts` :
 ![data-product-html](/assets/data-product-html.png)
 Visuellement avec du css : 
-![product-navigateaur](/assets/product-navigateaur.png)
+![product-navigateaur](/assets/product-navigateur.png)
 ## Barre de recherche et Routing Angular
 1. Ajouter cette méthode à Product Service
     I. `  getAllProductsSearchTerm(searchTerm:string) { 
@@ -78,8 +82,26 @@ Si le terme de recherche n'est pas vide, elle utilise le `router` pour naviguer 
 7. HTML :
 ![input-simple-recherche-exemple](/assets/input-simple-recherche-exemple.png)
   I. Résultat avec une faute: 
-  ![recherche-chemi-naviguateur](/assets/recherche-chemi-naviguateur.png)
+  ![recherche-chemi-naviguateur](/assets/recherche-chemi-navigateur.png)
   II. Résultat avec du CSS : 
-  ![recherche-veste-naviguateur-avec-css](/assets/recherche-veste-naviguateur-avec-css.png)
+  ![recherche-veste-naviguateur-avec-css](/assets/recherche-veste-navigateur-avec-css.png)
+# Tags des Produits
+1. Création de Model Tag
+  I. Ajouter des données d'exemple pour l'instant dans data.ts
+  II. `const sample_tags: Tag[] = [
+  { name: 'All', count: 8 },
+  { name: 'Été', count: 2 },
+  { name: 'Automne', count: 2 },
+  { name: 'Hiver', count: 3 },
+  { name: 'Printemps', count: 6 },
+  { name: 'Décontracté', count: 5 },
+  { name: 'Sportif', count: 1 },
+  { name: 'Formel', count: 1 },
+  { name: 'Élégant', count: 5 },
+  { name: 'Moderne', count: 4 },
+  ]`
+2. Ajouter 2 méthodes au Product Service
+  I. méthode getAll tags
+  II. getAll Products avec la méthode getAll tags
 
 
