@@ -252,7 +252,7 @@ HTML : `<li>
             </a>
           </li>`
 ![header-panier-navigateur](/assets/header-panier-navigateur.png)
-# NOT FOUND Barre de Recherche 
+# NOT FOUND Barre de Recherche & Panier
 1. Générer le component dans le dossier partials
   I.  `ng g c components/partials/not-found`
   II. dans le fichier TS : 
@@ -284,13 +284,50 @@ HTML : `<li>
 
   Page Single Produit :![single-produit-not-found-navigateur](/assets/single-produit-not-found-navigateur.png)
 
-  # PARTIE BACK-END
+  # BACK-END
+  ## Ce Projet est MEAN STACK, Utilisation de MongoDB, Express, (Angular) et NodeJS
   1. Connexion au Back
     I. Création du dossier backend à la racine du Projet, à coté du dossier frontend.
     II. Se situé dans le dossier backend : `npm init -y` dans le terminal, puis `npm install typescrit`
-    III. Créer un fichier dans le dossier back : `tsconfig.json`.
+    III. Création du fichier de config dans le dossier back : `tsconfig.json`.
     IV. Création du fichier .gitignore afin de ne pas push certains fichiers, surtout le dossier node_modules.
-    V.
+    V. Copier le fichier data.ts au backend/src (nos samples data du début), suppression des imports, remplacer les tableau `Product`, `Tag`, `Service` en `any`.
+    VI. Installation de express cors : `npm install express cors`
+    VII. dans le fichier package.json, les dépendances ont été correctement installés (cors et express à l'instant) : 
+    ![dependance-express-ts-cors-packagejson](/assets/dependance-express-ts-cors-packagejson.png)
+    VIII. Création de server.ts
+    IX. `npm install ts-node --save-dev`, `npm install nodemon --save-dev`
+    X. En dessous de script nous ajouté notre config `start` :  
+     `"scripts": {
+    "start": "cd src && nodemon server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }` plus qu'a lancé le serveur avec ``npm start`` ! :sparkle: ![serveur-run-npm-start](/assets/serveur-run-npm-start.png)
+  Résultat sur l'URL : `http://localhost:5000/api/products` :
+
+  ![serveur-run-bonjour](/assets/serveur-run-bonjour_b2rnvgepj.png)
+  Tout fonctionne ! 
+  A la place de ce bonjour je vais plutot inmplémenter mes produits.
+  `app.get("/api/products", (req, res) => {
+    res.send(sample_products);
+  })`
+  Plus qu'à recharger la page :
+  ![api-products-navigateur-json](/assets/api-products-navigateur-json.png) 
+  Nos Produits sont bien là au format JSON 😀 (malgrè qu'on ne voit que le T-Shirt sur la screenshot) 
+  
+  Plus qu'à continuer le travail (se référer au fichier `product.service.ts`.)
+  Une fois Toutes les routes API des `Produits` envoyés au client, passons à la seconde partie de la connexion au backend.
+
+  Toutes les données présentes seront appelé via l'api et non plus au fichier `data.ts` du dossier `frontend`
+  XI. Ajout du fichier `urls.ts` au frontend dans un dossier `constants`
+    - Déclarations de nos routes API dans ce fichier.
+  XII. Ajout du HttpClient Module
+    - Dans le fichier `app.module.ts` import de `HttpClientModule`
+  XIII. Modification de foodService
+
+
+
+
+
 
 
 

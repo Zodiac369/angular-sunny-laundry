@@ -15,15 +15,21 @@ export class ProductPageComponent implements OnInit {
   selectedMaterial: string = '';
   selectedServices: string[] = [];
   
-  constructor(activatedRoute: ActivatedRoute, productService: ProductService, private cartService: CartService, private router: Router) {
-    activatedRoute.params.subscribe((params) =>{
-      if (params.id)
-      this.product = productService.getProductById(params.id);
-      this.convertServiceStringsToObjects();
-    })
-   }
-  convertServiceStringsToObjects() {
-    throw new Error('Method not implemented.');
+  constructor(activatedRoute: ActivatedRoute, productService: ProductService,
+    private cartService:CartService, private router: Router) {
+      activatedRoute.params.subscribe((params) => {
+        if (params.id) {
+          productService.getProductById(params.id).subscribe(serverProduct => {
+            if (Array.isArray(serverProduct) && serverProduct.length > 0) {
+              this.product = serverProduct[0]; // Sélectionner le premier produit du tableau
+            } else if (!Array.isArray(serverProduct)) {
+              this.product = serverProduct; // Affecter directement si c'est un seul objet
+            } else {
+              // Gérer le cas où aucun produit n'est trouvé
+            }
+          });
+        }
+      });      
   }
 
   selectState(state: string) {

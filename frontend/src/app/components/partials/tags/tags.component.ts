@@ -11,7 +11,9 @@ export class TagsComponent implements OnInit {
   tags?:Tag[];
 
   constructor(productService: ProductService) {
-    this.tags = productService.getAllTags();
+    productService.getAllTags().subscribe(serverTags => {
+      this.tags = serverTags;
+    });
 
    }
    

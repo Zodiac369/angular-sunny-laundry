@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/shared/models/Product';
 
@@ -9,16 +10,22 @@ import { Product } from 'src/app/shared/models/Product';
   styleUrls: ['./products-page.component.css']
 })
 export class ProductsPageComponent implements OnInit {
-  products:Product[] = [];
+  products: Product[] = [];
 
   constructor(private productService: ProductService, activatedRoute: ActivatedRoute) {
+    let productsObservable: Observable<Product[]>;
+
     activatedRoute.params.subscribe((params) =>{
       if(params.rechercheTerm)
-      this.products = this.productService.getAllProductsSearchTerm(params.rechercheTerm);
+      productsObservable = this.productService.getAllProductsSearchTerm(params.rechercheTerm);
       else if(params.tag)
-      this.products = this.productService.getAllProductsByTag(params.tag);
+        productsObservable = this.productService.getAllProductsByTag(params.tag);
       else
-      this.products = productService.getAll();
+        productsObservable = productService.getAll();
+
+        productsObservable.subscribe((serverProducts) =>{
+          this.products = serverProducts;
+        })
     })
    }
 
