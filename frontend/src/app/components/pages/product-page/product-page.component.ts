@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/shared/models/Product';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-page',
@@ -13,14 +14,17 @@ export class ProductPageComponent implements OnInit {
   selectedState: string = '';
   selectedMaterial: string = '';
   selectedServices: string[] = [];
-  totalPrice: number = 0;
   
-  constructor(activatedRoute: ActivatedRoute, productService: ProductService) {
+  constructor(activatedRoute: ActivatedRoute, productService: ProductService, private cartService: CartService, private router: Router) {
     activatedRoute.params.subscribe((params) =>{
       if (params.id)
       this.product = productService.getProductById(params.id);
+      this.convertServiceStringsToObjects();
     })
    }
+  convertServiceStringsToObjects() {
+    throw new Error('Method not implemented.');
+  }
 
   selectState(state: string) {
     this.selectedState = state;
@@ -36,12 +40,15 @@ export class ProductPageComponent implements OnInit {
     } else {
         if (this.selectedServices.length < 2) {
             this.selectedServices.push(service);
-        }
+        } 
     }
   }
 
-
   ngOnInit(): void {
+  }
+
+  addToCart() {
+    this.cartService.addToCart(this.product);
   }
 
 }

@@ -14,7 +14,7 @@ export const sample_products: Product[] = [
     description: 'T-Shirt manche courte desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
-    service: ['Repassage', 'Blanchiement', 'Nettoyage à sec', 'Traitement anti-taches'],
+    service: ['Repassage', 'Blanchiement', 'Nettoyage à sec', 'Traitement anti-taches', 'Réparation de vêtements'],
     tags: ['Décontracté', 'Sportif', 'Été', 'Printemps']
   },
   {
@@ -28,7 +28,7 @@ export const sample_products: Product[] = [
     description: 'Chemise desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
-    service: [],
+    service: ['Repassage', 'Nettoyage à sec', 'Traitement anti-taches', 'Réparation de vêtements'],
     tags: ['Formel', 'Élégant']
   },
   {
@@ -98,7 +98,7 @@ export const sample_products: Product[] = [
     description: 'Jean desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
-    service: [],
+    service: ['Repassage', 'Nettoyage à sec', 'Traitement anti-taches', 'Réparation de vêtements'],
     tags: ['Printemps', 'Automne', 'Moderne', 'Décontracté']
   },
   {

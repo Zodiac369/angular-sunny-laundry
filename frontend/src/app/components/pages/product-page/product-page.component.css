@@ -3,12 +3,12 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 
 .container > *{
     min-width: 25rem;
-    max-width: 35rem;
+    max-width: 40rem;
     max-height: 40rem;
 }
 
@@ -17,11 +17,11 @@ img{
 }
 
 .details{
-    width: 100%;
+    width: 20rem;
     display: flex;
     flex-direction: column;
     flex: 1 0;
-    padding: 2rem;
+    padding: 1rem;
     color: black;
     margin-left: 1rem;
 }
@@ -151,7 +151,7 @@ button:hover{
 }
 
 .selected {
-    background-color: rgb(192, 151, 85); 
+    background-color: rgb(145, 102, 32); 
     color: rgb(255, 255, 255); 
 }
 

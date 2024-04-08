@@ -171,7 +171,35 @@ Si le terme de recherche n'est pas vide, elle utilise le `router` pour naviguer 
         this.product = productService.getProductById(params.id);
       })
     }`
-    Lorsqu'un nouvel id de produit est fourni dans les paramètres de l'URL, la méthode `getProductById()` du service `productService` est appelée pour récupérer les détails du produit.
 
-    Le produit récupéré est alors assigné à la variable product.  
+  Lorsqu'un nouvel id de produit est fourni dans les paramètres de l'URL, la méthode `getProductById()` du service `productService` est appelée pour récupérer les détails du produit.
+
+  Le produit récupéré est alors assigné à la variable product.
+
+  II. HTML-CSS Résultat : 
+  ![product-page-navigateur](/assets/product-page-navigateur.png)
+
+# Page Panier 
+1. Création d'un model de Structure Panier 
+  I. `import { Product } from "./Product";
+      export class CartItem{
+          constructor(public product: Product){ }
+          quantity: number = 1;
+          price: number = this.product.price;
+      }`
+2. Création d'un model de Panier 
+  I.`import { CartItem } from "./CartItem";
+    export class Cart{
+        items: CartItem[] = [];
+        totalPrice: number = 0;
+        totalCount: number = 0;
+    }`
+3. Générer un service Panier 
+  I. `ng g s services/cart`
+4. Permettre d'ajouter son Produit dans son panier 
+5. Générer un component page Panier 
+  I. Ajouter la route
+  II. TS-HTML-CSS
+    
+
 

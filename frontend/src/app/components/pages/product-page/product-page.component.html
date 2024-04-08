@@ -54,8 +54,8 @@
 
         <div class="service">
             <span>
-                (2 maximums)
                 Services:
+                (2 maximums)
                 <button class="service-button" *ngFor="let service of product.service" (click)="toggleService(service)" [class.selected]="selectedServices.includes(service)">
                     {{ service }}
                 </button>
@@ -68,6 +68,6 @@
             </span>
         </div>
 
-        <button class="cart-button">Ajouter Au Panier</button>
+        <button class="cart-button" (click)="addToCart()">Ajouter Au Panier</button>
     </div>
 </div>
