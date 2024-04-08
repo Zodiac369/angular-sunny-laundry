@@ -9,5 +9,6 @@ export class Product {
     description!: string;
     state!: string[];
     material!: string[];
+    service!: string[];
     tags?: string[];
 }

@@ -16,10 +16,11 @@ export class HomeComponent implements OnInit {
     activatedRoute.params.subscribe((params) =>{
       if(params.rechercheTerm)
       this.products = this.productService.getAllProductsSearchTerm(params.rechercheTerm);
-    else
-    this.products = productService.getAll();
+      else if(params.tag)
+      this.products = this.productService.getAllProductsByTag(params.tag);
+      else
+      this.products = productService.getAll();
     })
-    
   }
 
   ngOnInit(): void {

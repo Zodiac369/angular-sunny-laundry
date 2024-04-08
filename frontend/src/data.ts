@@ -1,4 +1,5 @@
 import { Product } from "./app/shared/models/Product";
+import { Service } from "./app/shared/models/Service";
 import { Tag } from "./app/shared/models/Tag";
 
 export const sample_products: Product[] = [
@@ -13,6 +14,7 @@ export const sample_products: Product[] = [
     description: 'T-Shirt manche courte desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: ['Repassage', 'Blanchiement', 'Nettoyage à sec', 'Traitement anti-taches'],
     tags: ['Décontracté', 'Sportif', 'Été', 'Printemps']
   },
   {
@@ -26,6 +28,7 @@ export const sample_products: Product[] = [
     description: 'Chemise desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: [],
     tags: ['Formel', 'Élégant']
   },
   {
@@ -39,6 +42,7 @@ export const sample_products: Product[] = [
     description: 'Pull desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: [],
     tags: ['Décontracté', 'Hiver', 'Printemps']
   },
   {
@@ -52,6 +56,7 @@ export const sample_products: Product[] = [
     description: 'Veste desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: [],
     tags: ['Élégant', 'Décontracté', 'Printemps']
   },
   {
@@ -65,7 +70,8 @@ export const sample_products: Product[] = [
     description: 'Jupe desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
-    tags: ['Printemps', 'Automne', 'Élégant', 'Moderne', 'Décontracté']
+    service: [],
+    tags: ['Printemps', 'Automne', 'Élégant', 'Moderne', 'Décontracté', 'Été']
   },
   {
     id:'6',
@@ -78,6 +84,7 @@ export const sample_products: Product[] = [
     description: 'Manteau desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: ['Nettoyage à sec', 'Repassage', 'Réparation de vêtements', 'Traitement anti-taches' ],
     tags: ['Hiver', 'Moderne', 'Printemps']
   },
   {
@@ -91,7 +98,8 @@ export const sample_products: Product[] = [
     description: 'Jean desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
-    tags: ['Printemps', 'Automne', 'Élégant', 'Moderne', 'Décontracté', 'Hiver']
+    service: [],
+    tags: ['Printemps', 'Automne', 'Moderne', 'Décontracté']
   },
   {
     id:'8',
@@ -104,19 +112,33 @@ export const sample_products: Product[] = [
     description: 'Robe desc',
     state: ['Neuf', 'Bon état', 'Abîmé'],
     material: ['Cuir', 'Daim', 'Velours', 'Cotton', 'Soie', 'Laine', 'Satin', 'Denim'],
+    service: [],
     tags: ['Été', 'Élégant', 'Moderne']
   },
 ]
 
-const sample_tags: Tag[] = [
-  { name: 'All', count: 8 },
-  { name: 'Été', count: 2 },
+export const sample_tags: Tag[] = [
+  { name: 'Tous', count: 8 },
+  { name: 'Été', count: 3 },
   { name: 'Automne', count: 2 },
-  { name: 'Hiver', count: 3 },
+  { name: 'Hiver', count: 2 },
   { name: 'Printemps', count: 6 },
   { name: 'Décontracté', count: 5 },
   { name: 'Sportif', count: 1 },
   { name: 'Formel', count: 1 },
-  { name: 'Élégant', count: 5 },
+  { name: 'Élégant', count: 4 },
   { name: 'Moderne', count: 4 },
+]
+
+export const sample_services: Service[] = [
+  { name: 'Nettoyage à sec', price: 10 },
+  { name: 'Repassage', price: 15 },
+  { name: 'Nettoyage de tissus délicats', price: 20 },
+  { name: 'Nettoyage de vêtements en cuir et en daim', price: 25 },
+  { name: 'Nettoyage de tapis et de rideaux', price: 30 },
+  { name: 'Réparation de vêtements', price: 35 },
+  { name: 'Traitement anti-taches', price: 15 },
+  { name: 'Imperméabilisation de vêtements', price: 50 },
+  { name: 'Blanchiment de vêtements', price: 10 },
+  { name: 'Nettoyage de chaussures et de sacs à main en cuir', price: 20 },
 ]

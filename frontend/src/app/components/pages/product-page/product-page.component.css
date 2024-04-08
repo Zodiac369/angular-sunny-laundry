@@ -1,0 +1,161 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 4rem;
+}
+
+.container > *{
+    min-width: 25rem;
+    max-width: 35rem;
+    max-height: 40rem;
+}
+
+img{
+    margin-right: 1rem;
+}
+
+.details{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    padding: 2rem;
+    color: black;
+    margin-left: 1rem;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.favorite{
+    color: red;
+    font-size: 2.5rem;
+}
+
+.favorite.not{
+    color: gray;
+}
+
+.category{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.category span{
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    background-color: rgb(237, 197, 123);
+    color: black;
+}
+
+.tags{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags a{
+    background-color: rgb(155, 155, 154);
+    padding: 0.3rem 1rem;
+    margin: 1rem 0.5rem 1rem 1rem;
+    border-radius: 10rem;
+    font-weight: 400;
+    color: blue;
+}
+
+.state{
+    margin-top: 0.5rem;
+}
+
+.state span{
+    padding: 0.6rem 2rem 0.6rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.state-button{
+    font-size: 1rem;
+    margin: 0rem 0.5rem;
+    border: none;
+    outline: none;
+}
+
+.material{
+    margin-top: 1rem;
+}
+
+.material span{
+    padding: 0.6rem 2rem 0.6rem 0;
+    font-size: 1.5rem;
+    font-weight: bold; 
+}
+
+.material-button{
+    font-size: 1rem;
+    margin: 0.5rem 0.5rem;
+    border: none;
+    outline: none;
+}
+
+.service{
+    margin-top: 0.5rem;
+}
+
+.service span{
+    padding: 0.6rem 2rem 0.6rem 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.service-button{
+    font-size: 1rem;
+    margin: 0.5rem 0.5rem;
+    border: none;
+    outline: none;
+}
+
+.price{
+    font-size: 1.8rem;
+    margin: 2rem 0rem 1.5rem 0rem;
+    color: rgb(0, 0, 0);
+}
+
+.price::before{
+    content: "Prix: ";
+    color: darkgrey;
+}
+
+.cart-button{
+    color: black;
+    background-color: rgb(199, 166, 104);
+    border: none;
+    font-size: 1.2rem;
+    padding: 1rem;
+    border-radius: 10rem;
+    outline: none;
+}
+
+button:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: rgb(192, 151, 85); 
+    color: rgb(255, 255, 255); 
+}
+
+
+
+
+

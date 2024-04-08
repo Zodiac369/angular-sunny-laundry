@@ -101,7 +101,77 @@ Si le terme de recherche n'est pas vide, elle utilise le `router` pour naviguer 
   { name: 'Moderne', count: 4 },
   ]`
 2. Ajouter 2 méthodes au Product Service
-  I. méthode getAll tags
-  II. getAll Products avec la méthode getAll tags
+  * méthode getAllTags : 
+  ` getAllTags(): Tag[]{
+    return sample_tags;
+  }`
+  Elle utilise une variable appelée sample_tags qui contient tous les tags
+  
+  * méthode getAllProductsByTag :
+  ` getAllProductsByTag(tag: string): Product[]{
+    return tag == "All"?
+    this.getAll():
+    this.getAll().filter(
+      product => product.tags?.
+      includes(tag));
+ }` 
+  Si le tag est "All" alors tous les produits doivent être retournés donc la fonction renvoie simplement tous les produits en utilisant `this.getAll()`
+  Sinon la fonction filtre les produits en fonction du `tag` spécifié
+  Elle parcourt tous les produits et vérifie si le `tag` spécifié est inclus dans les `tags` du produit
+  Si c'est le cas, le produit est ajouté à un tableau qui sera retournS
+  
+3.  Ajouter la Route Tags
+  I. `{path: 'tag/:tag', component: HomeComponent}` (Similaire à la route Recherche)
+4. Afficher les résultats dans le component Home
+  I. Si un paramètre appelé tag est présent dans l'URL cela signifie qu'un tag spécifique a été sélectionné. Dans ce cas il utilise la méthode `getAllProductsByTag()` du service `productService` pour obtenir les produits correspondants.
+  II. Test dans l'URL : 
+  ![tag-url-navigateur](/assets/tag-url-navigateur.png)
+5. Générer le component Tags
+  `ng g c components/partials/tags`
+  I. l'ajouter au Home component
+  <app-tags></app-tags>
+  II. TS-HTML-CSS :
+  TS: `tags?:Tag[];`
+  `constructor(productService: ProductService) {
+    this.tags = productService.getAllTags();
+   }`
+  Récupèrons tous les tags à partir du service `productService` en appelant la méthode `getAllTags()`.
+  Afin de les stocké dans la variable tags du composant, les tags seront disponibles pour être utilisés dans le template HTML.
+  HTML: ![tag-comp-html](/assets/tag-comp-html.png)
+  Visuellement : ![tag-html-navigateur](/assets/tag-html-navigateur.png)
+  CSS + Tag Formel :
+  Résulat de Chemise :
+  ![tag-avec-css-navigateur-formel](/assets/tag-avec-css-navigateur-formel.png)
 
+  # Page du Produit
+  1. Ajouter la méthode `getProductById` au fichier product.service.ts :
+   `getProductById(productId: string){
+    return this.getAll().find(product => product.id == productId) ?? new Product();
+  }`
+    I. La métode `getAll` récupère tous les produits, la méthode `find()` recherche le produit dont l'id correspond à l'identifiant passé en argument `productId`, si le produit est trouvé il est renvoyé, si rien n'est trouvé elle renverra `undefined` une valeur par défaut `new Product()` est renvoyé. Cela me garantit que la méthode renvoie toujours quelque chose même si aucun produit n'est trouvé. 
+  2. Générer le component Page Produit
+    I. `ng g c components/pages/product-page` (respecter l'arborescance du projet afin de s'y retrouver au mieux)
+  3. Ajouter la route
+    I. `{ path: 'product/:id', component: ProductPageComponent }` dans le fichier `app-routing.module.ts`
+    II. Lorsque l'on clique sur un produit : 
+    ![product-compo-working-navigateur](/assets/product-compo-working-navigateur.png)
+  4. TS-HTML-CSS 
+    TS : 
+    ` product!: Product;`
+    La variable product est déclarée avec le type Product. Le ! garantie que cette variable sera initialisée avant qu'elle soit utilisée
+
+    Le constructeur prend deux arguments : 
+    `constructor(activatedRoute: ActivatedRoute, productService: ProductService)`
+    Il écoute les changements dans les paramètres de l'URL à l'aide de:
+    `activatedRoute.params.subscribe(...)`.
+
+    `{
+      activatedRoute.params.subscribe((params) =>{
+        if (params.id)
+        this.product = productService.getProductById(params.id);
+      })
+    }`
+    Lorsqu'un nouvel id de produit est fourni dans les paramètres de l'URL, la méthode `getProductById()` du service `productService` est appelée pour récupérer les détails du produit.
+
+    Le produit récupéré est alors assigné à la variable product.  
 
