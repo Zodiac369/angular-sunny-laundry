@@ -196,10 +196,107 @@ Si le terme de recherche n'est pas vide, elle utilise le `router` pour naviguer 
     }`
 3. Générer un service Panier 
   I. `ng g s services/cart`
-4. Permettre d'ajouter son Produit dans son panier 
+4. Permettre d'ajouter/supprimer/modifier/changer la quantité d'un ou plusieurs Produit(s) dans son panier :
+
+  I. `addToCart(product: Product): void:` Ajoute un produit au panier. Vérifie si le produit est déjà dans le panier. Si c'est le cas il fait rien. Sinon il ajoute un nouvel élément au panier avec ce produit.
+
+  II. `removeFromCart(productId: string): void` Supprime un produit du panier en filtrant les éléments du panier pour ne garder que ceux dont l'ID du produit ne correspond pas à celui fourni.
+
+  III. `changeQuantity(productId: string, quantity: number):`: Modifie la quantité d'un produit dans le panier en cherchant l'élément correspondant dans le panier et en mettant à jour sa quantité et son prix en conséquence
+
+  IV. `clearCart()`: Vide à zéro le panier en le réinitialisant à un nouveau panier vide
+
+  V. `getCartObservable(): Observable<Cart>`: Renvoie un Observable qui émet des mises à jour du panier. Les composants peuvent s'abonner à cet Observable pour être informés des changements dans le panier
+
+  VI. `setCartToLocalStorage(): void:` Met à jour le panier dans le localStorage du navigateur. Calcul le prix total et le nombre total d'articles dans le paniers puis sauvegarde le panier dans le localStroage et notifie les abonnés à l'Observable
+
+  VII. `getCartFromLocalStorage(): Cart:` Récupère le panier à partir du stockage local du navigateur. S'il n'existe pas, il crée un nouveau panier vide
+
 5. Générer un component page Panier 
   I. Ajouter la route
+    `{ path: 'panier', component: CartComponent },`
   II. TS-HTML-CSS
+
+  TS. 
+  Properties :
+  `cart!: Cart;`
+  Stock les données du panier actuel.
+  `Constructor:` :
+  Injection du service de panier `CartService`
+
+Abonnement à l'Observable du panier: Lorsque le composant est initialisé il s'abonne à l'Observable du panier à l'aide de la méthode `getCartObservable()` du service `CartService`. À chaque mise à jour du panier il met à jour la propriété cart du composant
+
+`removeFromCart(cartItem: CartItem):` Cette méthode est appelée lorsqu'un utilisateur souhaite supprimer un élément du panier,elle utilise le service `CartService` pour supprimer l'élément du panier en fonction de l'ID du produit
+
+`changeQuantity(cartItem: CartItem, quantityInString: string):` Cette méthode est appelée lorsqu'un utilisateur souhaite modifier la quantité d'un élément dans le panier, elle prend la nouvelle quantité (fournie sous forme de chaîne de caractères) et la convertit en nombre entier. Ensuite, elle utilise le service `CartService` pour mettre à jour la quantité de l'élément dans le panier en fonction de l'ID du produit associé à cet élément
+
+HTML & CSS, Résultat :
+ ![navigateur-panier](/assets/navigateur-panier.png)
+
+Plus qu'a rendre dynamique l'affichage des éléments présents dans le panier situé dans le header :
+dans le fichier `header.component.ts` :
+Propriété :
+`cartQuantity`: Stock le nombre total d'articles dans le panier.
+Au début elle est initialisée à 0
+
+Constructor :
+Injection du cartService
+Abonnement à l'Observable du panier, lorsque le composant est initialisé il s'abonne à l'Observable du panier avec la méthode `getCartObservable()` du service `CartService`
+À chaque mise à jour du panier la fonction de rappel est déclenchée avec le nouveau panier
+
+Mise à jour de `cartQuantity` A chaque fois qu'une mise à jour du panier est reçue le nombre total d'articles dans le panier (newCart.totalCount) est assigné à la propriété cartQuantity. Cela met à jour dynamiquement le nombre d'articles affiché dans le header 
+
+HTML : `<li>
+            <a routerLink="/panier">
+              Panier <span *ngIf="cartQuantity">{{ cartQuantity }}</span>
+            </a>
+          </li>`
+![header-panier-navigateur](/assets/header-panier-navigateur.png)
+# NOT FOUND Barre de Recherche 
+1. Générer le component dans le dossier partials
+  I.  `ng g c components/partials/not-found`
+  II. dans le fichier TS : 
+  Initialisation de 4 décorateurs `@Input()` sont utilisés pour définir des propriétés d'entrée, ces valeurs peuvent être passées au composant depuis son parent. 
+  Les propriétés `visible`, `notFoundMessage`, `resetLinkText`, `resetLinkRoute` sont toutes des propriétés d'entrée qui peuvent être définies à partir du composant parent lors de l'utilisation du composant `NotFoundComponent` dans le template.
+
+  Les propriétés d'entrée permettent de personnaliser l'apparence et le comportement du component selon les besoins, dans mon cas un message et un lien.
+
+2. l'Ajouter aux pages nécessaires...
+  I. HTML du component`notFound` :
+  `<div *ngIf="visible">
+    {{ notFoundMessage }}
+    <a [routerLink]="resetLinkRoute">{{ resetLinkText }}</a></div>`
+    Celà affiche ou masque l'élément en fonction de la valeur de la propriété visible du component, si visible est évalué à true donc le contenu à l'intérieur de la balise `<div>` sera affiché sinon il sera masqué
+
+  II. Panier HTML :
+  `[visible]="!cart || !cart.items.length"` : Cette propriété d'entrée visible détermine si le component `"NotFoundComponent"` est visible ou non.
+   Elle est définie en fonction de la condition si panier est vide.
+    Si le panier est vide `(!cart || !cart.items.length évalué à true)` le component `"NotFoundComponent"` sera visible.
+  `notFoundMessage`="Votre panier est vide." : le message à afficher.
+  `resetLinkText="Retour à l'accueil"` : C'est le lien permettant à l'utilisateur de revenir à la page d'accueil
+
+
+  Résultat avec du CSS :![not-found-navigateur-panier](/assets/not-found-navigateur-panier.png)
+
+  Page Produits :
+  Meme principe que le panier, redirige vers la liste des produits.
+  Résultat de la recherche ne donnant rien 'azerty' : ![test-azerty-recherche-notfound-navigateur](/assets/test-azerty-recherche-notfound-navigateur.png)
+
+  Page Single Produit :![single-produit-not-found-navigateur](/assets/single-produit-not-found-navigateur.png)
+
+  # PARTIE BACK-END
+  1. Connexion au Back
+    I. Création du dossier backend à la racine du Projet, à coté du dossier frontend.
+    II. Se situé dans le dossier backend : `npm init -y` dans le terminal, puis `npm install typescrit`
+    III. Créer un fichier dans le dossier back : `tsconfig.json`.
+    IV. Création du fichier .gitignore afin de ne pas push certains fichiers, surtout le dossier node_modules.
+    V.
+
+
+
+
+
+
     
 
 

@@ -1,15 +1,20 @@
 <app-search></app-search>
 <br>
 <app-tags></app-tags>
+<app-not-found
+    [visible]="!products || !products.length"
+    resetLinkText="Ne baisse pas les bras 💪 Retourne à la Recherche de ton Produit 🥰"
+    resetLinkRoute="/produits"
+></app-not-found>
 <ul>
     <li *ngFor="let product of products">
-        <a routerLink="/product/{{product.id}}">
+        <a routerLink="/produit/{{ product.id }}">
             <img [src]="product.imageUrl" [alt]="product.name"/>
             <div class="content">
                 <div class="name">
                     {{product.name}}
                 </div>
-                <span class="favorite {{product.favorite?'':'not'}}">
+                <span class="favorite {{ product.favorite?'':'not' }}">
                     ❤
                 </span>
                 <div class="stars">
@@ -25,7 +30,7 @@
                 <div class="product-item-footer">
                     <div class="category">
                         <span *ngFor="let category of product.categorys">
-                            {{category}}
+                            {{ category }}
                         </span>
                     </div>
                     <div class="price">

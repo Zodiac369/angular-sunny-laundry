@@ -10,22 +10,23 @@ import { CartItem } from 'src/app/shared/models/CartItem';
 })
 export class CartComponent implements OnInit {
   cart!: Cart;
+
   constructor(private cartService: CartService) {
     this.cartService.getCartObservable().subscribe((cart) => {
       this.cart = cart;
     })
    }
 
-  ngOnInit(): void {
-  }
-
-  removeFromCart(cartItem: CartItem) {
-    this.cartService.removeFromCart(cartItem.product.id);
-  }
-  
-  changeQuantity(cartItem: CartItem, quantityInString: string) {
-    const quantity = parseInt(quantityInString);
-    this.cartService.changeQuantity(cartItem.product.id, quantity);
-  }
-
+   
+   removeFromCart(cartItem: CartItem) {
+     this.cartService.removeFromCart(cartItem.product.id);
+    }
+    
+    changeQuantity(cartItem: CartItem, quantityInString: string) {
+      const quantity = parseInt(quantityInString);
+      this.cartService.changeQuantity(cartItem.product.id, quantity);
+    }
+    
+    ngOnInit(): void {
+    }
 }

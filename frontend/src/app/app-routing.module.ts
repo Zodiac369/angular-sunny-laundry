@@ -7,10 +7,10 @@ import { ProductsPageComponent } from './components/pages/products-page/products
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', component: ProductsPageComponent },
-  { path: 'recherche/:rechercheTerm', component: HomeComponent },
+  { path: 'produits', component: ProductsPageComponent },
+  { path: 'recherche/:rechercheTerm', component: ProductsPageComponent },
   { path: 'tag/:tag', component: ProductsPageComponent },
-  { path: 'product/:id', component: ProductPageComponent },
+  { path: 'produit/:id', component: ProductPageComponent },
   { path: 'panier', component: CartComponent },
   // { path: 'service/:id', component: ServicePageComponent }
 ];

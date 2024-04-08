@@ -1,4 +1,10 @@
 <app-title title="Mon Panier" margin="1.5rem 0 0 2.5rem"></app-title>
+<app-not-found
+  [visible]="!cart || !cart.items.length"
+  notFoundMessage="Ton panier est vide."
+  resetLinkText="Ne laisse pas ton panier dans cet état 😭"
+
+></app-not-found>
 <div *ngIf="cart && cart.items.length" class="container">
 <ul>
   <li *ngFor="let cartItem of cart.items">

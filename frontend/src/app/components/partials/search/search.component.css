@@ -6,11 +6,11 @@ div{
 }
 
 input{
-    border-radius: 10rem 0 0 10rem;
+    /* border-radius: 10rem 0 0 10rem; */
     border: none;
     height: 3rem;
     width: 14rem;
-    background-color: rgb(183, 178, 167);
+    background-color: rgb(208, 203, 193);
     padding: 1.2rem;
     font-size: 1rem;
     font-weight: 500;
@@ -24,9 +24,9 @@ div button{
     font-size: 1rem;
     font-weight: 400;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border-radius: 0 10rem 10rem 0;
+    /* border-radius: 0 10rem 10rem 0; */
     border: none;
-    background-color: rgb(74, 70, 70);
+    background-color: rgb(138, 134, 134);
     color: white;
     opacity: 0.8rem;
     outline: none;
@@ -35,6 +35,6 @@ div button{
 div button:hover{
     opacity: 2;
     cursor: pointer;
-    background-color: rgb(218, 205, 185);
+    background-color: rgb(158, 131, 91);
     color: black;
 }
