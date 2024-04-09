@@ -5,3 +5,4 @@ export const PRODUCT_BY_ID_URL = BASE_URL + '/api/produit/';
 export const PRODUCTS_TAGS_URL = PRODUCTS_URL + '/tags';
 export const PRODUCTS_BY_SEARCH_URL = PRODUCTS_URL + '/recherche/';
 export const PRODUCTS_BY_TAG_URL = PRODUCTS_URL + '/tag/';
+export const USER_LOGIN_URL = BASE_URL + '/api/users/login';

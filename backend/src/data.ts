@@ -138,3 +138,20 @@ export const sample_services: any[] = [
   { name: 'Blanchiment de vêtements', price: 10 },
   { name: 'Nettoyage de chaussures et de sacs à main en cuir', price: 20 },
 ]
+
+export const sample_users: any[] = [
+  {
+    name: 'Patrick Bateman',
+    email: 'patrick@gmail.com',
+    password: 'mdp369',
+    address: 'New York',
+    isAdmin: true,
+  },
+  {
+    name: 'Beatrix Kiddo',
+    email: 'beatrix@gmail.com',
+    password: 'mdp369',
+    address: 'Los Angeles',
+    isAdmin: false,
+  },
+];

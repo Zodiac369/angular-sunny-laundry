@@ -322,8 +322,31 @@ HTML : `<li>
     - Déclarations de nos routes API dans ce fichier.
   XII. Ajout du HttpClient Module
     - Dans le fichier `app.module.ts` import de `HttpClientModule`
-  XIII. Modification de foodService
+  XIII. Modification de foodService.
 
+  # Page Login
+  1. Générer le component `ng g c components/pages/login`
+    I. Ajouter la route : `{ path: 'connexion', component: LoginComponent }`
+    II. TS : 
+    III. Import du Reactive Forms Module dans `app.module.ts`.
+  2. Login API POST request
+    II. Ajout du JWT : `npm install jsonwebtoken`
+    III. Test avec Psotman : ![postman-login-1](/assets/postman-login-1.png)
+
+  3. Générer un Service User
+    I. Générer un Model User
+    II. Ajout d'un User Subject
+    III. Ajout de Method Login
+      - Ajout d'urls User
+      - Générer IUserLogin Interface
+      - Ajout de ngx-toaster : `npm install ngx-toastr`
+      - Import de Module
+      - Import de BrowserAnimationsModule
+      - Ajout de style dans angular.json
+    IV. Ajout dynamique dans le header
+      - Ajout dans le localStorage
+      - Method Déconnexion
+      - Ajout Déconnexion dans le header 
 
 
 

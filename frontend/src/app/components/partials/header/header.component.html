@@ -4,17 +4,19 @@
       <a routerLink="/" class="logo">Sunny Laundry</a>
       <nav>
         <ul>
+          <li *ngIf="!user.token">
+            <a routerLink="/login">Connexion</a>
+          </li>
           <li>
             <a routerLink="/">Accueil</a>
             <a routerLink="/produits">Nos Produits</a>
-            <a routerLink="/login">Connexion</a>
           </li>
-          <li class="menu-container">
-            <a routerLink="/dashboard">Emre</a>
+          <li *ngIf="isAuth" class="menu-container">
+            <a routerLink="/dashboard">{{ user.name }}</a>
             <div class="menu">
               <a routerLink="/profile">Profil</a>
               <a routerLink="/orders">Commandes</a>
-              <a>Déconnexion</a>
+              <a routerLink="/produits" (click)="logout()">Déconnexion</a>
             </div>
           </li>
           <li>
