@@ -528,3 +528,116 @@ Bouton pour soumettre le formulaire de connexion.
 - Test de la connexion avec l'un des emails de sample_users :
 ![connexion-success-toast](/assets/connexion-success-toast.png)
 Le résultat attendu est là 😉
+
+# Components de défaut sans Tamplates, Pour quoi faire ? 
+#### 
+Ces composants sans templates dans Angular offrent une couche supplémentaire de sécurité en facilitant la validation des données côté client. 
+
+Cela permet de détecter et de prévenir les erreurs de saisie dès que l'utilisateur interagit avec le formulaire, réduisant ainsi le risque de soumission de données non valides ou malveillantes. 
+
+Bien que la sécurité dépende de plusieurs facteurs, une validation côté client efficace contribue à renforcer la robustesse générale de l'application contre les attaques telles que l'injection de code/script, les requetes JSON-like, injection NoSQL.
+### Page Login
+#### Input Container 
+  - `ng g c components/partials/input-container`
+  - TS : modification du selector `app-input-container` en `input-container`
+  ```typescript
+  @Input()
+  label!: string;
+
+  @Input()
+  bgColor = 'white';
+  ```
+  - HTML : 
+  ```html 
+  <div class="container" [ngStyle]="{'background-color' : bgColor}">
+    <label>
+        {{ label }}
+    </label>
+    <div class="content">
+        <ng-content></ng-content>
+    </div>
+  </div>
+  ```
+  - Modification du `login.component.html` :
+  ```html 
+  <input-container label="Email">
+    <input type="email" placeholder="Email" 
+    formControlName="email"/>
+    <div class="error-list" *ngIf="fc.email.errors && isSubmitted">
+        <div *ngIf="fc.email.errors.required">Ne pas laisser vide</div>
+        <div *ngIf="fc.email.errors.required">l'Email n'est pas valide</div>
+    </div>
+  </input-container>
+  ```
+#### Input Validation
+  - `ng g c components/partials/input-validation`
+    - TS : 
+    ```typescript
+    // Un objet contenant les messages d'erreur lié a chaque type de validation
+    const VALIDATORS_MESSAGES: any = {
+      required: 'Ne pas laisser vide',
+      email: 'l\'Email n\'est pas valide'
+    } 
+
+    // Cet Input reçoit un contrôle de formulaire depuis le composant parent
+    @Input()
+    control!: AbstractControl;
+
+    // Indique si les erreurs doivent être affichées, il est true par défaut
+    @Input()
+    showErrorsWhen: boolean = true;
+    // Un tableau pour les messages d'erreur lié au contrôle de formulaire
+    errorMessages: string[] = [];
+
+    // Cette méthode vérifie les erreurs de validation du formulaire. 
+    // Si des erreurs sont présentes, elle les stocke dans errorMessages en utilisant les clés d'erreur pour trouver les messages correspondants dans VALIDATORS_MESSAGES. 
+    // Si aucune erreur n'est détectée, le tableau d'erreurs est vidé.
+    checkValidation(){
+      const errors = this.control.errors;
+      if (!errors){
+        this.errorMessages = [];
+        return;
+      }
+      const errorKeys = Object.keys(errors);
+      this.errorMessages = errorKeys.map(key => VALIDATORS_MESSAGES[key]);
+    }
+    ```
+
+    
+    ```typescript
+    // ngOnInit = fonction appelée une fois lors de la création du composant. 
+    // Elle sert ici à mettre en place le suivi des changements dans le contrôle de formulaire
+    ngOnInit(): void {
+      this.control.statusChanges.subscribe(() =>{
+        this.checkValidation();
+      });
+      this.control.valueChanges.subscribe(() => {
+        this.checkValidation();
+      })
+    }
+    // ngOnChanges = fonction qui se déclenche chaque fois qu'une valeur d'entrée du composant change. 
+    // Au moment où la valeur du contrôle de formulaire change
+    ngOnChanges(changes: SimpleChanges): void {
+    this.checkValidation();
+    }
+
+    // Résumé :  je m'abonne aux changements du contrôle de formulaire. 
+    // Chaque fois que quelque chose change dans ce contrôle je vérifie les erreurs de validation avec checkValidation 
+    ```
+    - HTML :
+    ```html
+      <div class="error-list" *ngIf="errorMessages && showErrorsWhen">
+        <div *ngFor="let errorMessages of errorMessages">
+            {{ errorMessages }}
+        </div>
+      </div>
+    ```
+    - Modification du `login.component.html`
+    ![login-compo-html-email-input-validation](/assets/login-compo-html-email-input-validation.png)
+    - Résultat (Uniquement sur le champ email pour l'instant ref: couleur) :
+    ![input-validation-compo-email-navigateur](/assets/input-validation-compo-email-navigateur.png)
+    - Combiné les Input avec le nom de text-input : 
+    - `ng g c components/partials/text-input`
+
+- Text Input 
+- Boutton par défaut
