@@ -3,6 +3,8 @@ import cors from 'cors';
 import { sample_products, sample_tags, sample_users } from './data';
 import jwt from "jsonwebtoken";
 
+// NOTE req : C'est l'objet "request" (requête) qui représente les données envoyées par le client au serveur lorsqu'une requête HTTP est effectuée.
+// NOTE res :  C'est l'objet "response" (réponse) qui est utilisé pour renvoyer une réponse HTTP du serveur au client après avoir traité une requête.
 
 const app = express(); // Importation du module Express
 app.use(express.json());
@@ -50,24 +52,30 @@ app.get("/api/produit/:produitId", (req, res) =>{
     res.send(product); // ENvois au client
 })
 
+//  Le Server reçoit les données du formulaire de connexion dans req.body (email&password)
 app.post("/api/users/login", (req, res) => {
     const {email, password} = req.body;
-    const user = sample_users.find(user => user.email === email && user.password === password)  
+    const user = sample_users.find(user => user.email === email && user.password === password)  // Le serveur recherche un utilisateur correspondant au donées des samples
     
+    // Si trouvé = le serveur renvoie une réponse avec le token d'auth à l'aide de la fonction genereateTokenResponse
     if (user){
         res.send(generateTokenResponse(user))
-    }else{
+    }else{ // Si aucun trouvé = le serveur renvoie une erreur 400 avec le message ci-dessous 
         res.status(400).send("Identifiant ou Mot de passe non valide !");
     }
 })
 
+// cette fonction prend un objet user en entrée (JWT)
 const generateTokenResponse = (user: any)=>{
     const token = jwt.sign({
+        // le token contient son role 
         email: user.email, isAdmin: user.isAdmin
-    }, "TextAléatoire", {
+        // il est signé avec la clé secrète et expire au bout de 30j
+    }, "TexteAléatoire", {
         expiresIn: "30d"
     });
 
+    // Une fois le token généré il est ajouté a l'objet user et est retourné 
     user.token = token;
     return user;
 }
