@@ -6,7 +6,6 @@ div{
 }
 
 input{
-    /* border-radius: 10rem 0 0 10rem; */
     border: none;
     height: 3rem;
     width: 14rem;
@@ -24,7 +23,6 @@ div button{
     font-size: 1rem;
     font-weight: 400;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    /* border-radius: 0 10rem 10rem 0; */
     border: none;
     background-color: rgb(138, 134, 134);
     color: white;

@@ -1095,9 +1095,22 @@ export default router;
     </div>
   </div>
  ```
+# Chargement des données 
+- Ajout de l'image dans le dossier `Assets`
+- Création du composant `loading`
+- Ajout du service `laoding`
+  - Création de 2 méthodes, `showLoading` et `hideLoading()`
+- Ajout de l'intercepteur `loading`
 
-# Page Commaande
-- 
+# Page Commande
+- Création du `Model Order`
+- Création du composant `Checkout Page`
+  - Ajout de la route
+- Ajout du User au `Service User`
+- Ajout du Panier au `Serice Panier`
+- Création du composant `Order Items List`
+
+
 
   
 

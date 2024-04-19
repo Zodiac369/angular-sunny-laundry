@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="content">
+        <app-title title="Récapitulatif de commande" fontSize="1.6rem"></app-title>
+        <form [formGroup]="checkoutForm">
+        <text-input [control]="fc.name" label="Nom"></text-input>
+        <text-input [control]="fc.address" label="Adresse"></text-input>
+
+        </form>
+        <order-items-list [order]="order"></order-items-list>
+    </div>
+    <div class="map">
+        <app-title title="Sélectionnez votre emplacement sur la carte"
+        fontSize="1.6rem"
+        ></app-title>
+        <!-- <app-title title="Localisez-vous sur la carte"></app-title> -->
+    </div>
+    <div class="buttons-container">
+        <div class="buttons">
+            <button (click)="createOrder()">
+                Procéder au Paiement
+            </button>
+        </div>
+    </div>
+</div>

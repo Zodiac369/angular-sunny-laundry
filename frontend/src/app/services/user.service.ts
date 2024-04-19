@@ -19,10 +19,9 @@ export class UserService {
     this.userObservable = this.userSubject.asObservable();
   }
 
-  // public get currentUser():User{
-  //   return this.userSubject.value;
-  // }
-
+  public get currentUser(): User{
+    return this.userSubject.value;
+  }
 
   login(userLogin: IUserLogin): Observable<User> {
     // Pipe est utilisé pour enchaîner des opérateurs de transformation sur le flux de données retourné par la requête 
