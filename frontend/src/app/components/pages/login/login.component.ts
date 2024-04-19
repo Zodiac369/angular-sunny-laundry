@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.loginForm =this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]], // Pas de Valeur Non Valide
       password: ['', Validators.required]
     });
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
   }
 
-  get fc(){ //getter
+  get fc(){ // getter
     return this.loginForm.controls;
   }
 

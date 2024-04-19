@@ -1,7 +1,7 @@
 <div class="container">
     <div class="details">
         <app-title title="Connexion"></app-title>
-        
+
         <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <text-input 
             [control]="fc.email" 
@@ -14,12 +14,17 @@
             [control]="fc.password" 
             [showErrorsWhen]="isSubmitted"
             type="password"
-            label="Password"
+            label="Mot de passe"
             ></text-input>
 
-            <div class="button">
-                <button type="submit">Connexion</button>
+            <default-button text="Connexion"></default-button>
+            <div class="register">
+            Nouveau ici ? Inscrit toi par là 👉 &nbsp;
+            <a routerLink="/register" [queryParams]="{returnUrl : returnUrl}">
+                Inscription
+            </a>
             </div>
+            
         </form>
     </div>
 </div>

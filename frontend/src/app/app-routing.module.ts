@@ -5,16 +5,21 @@ import { ProductPageComponent } from './components/pages/product-page/product-pa
 import { CartComponent } from './components/pages/cart/cart.component';
 import { ProductsPageComponent } from './components/pages/products-page/products-page.component';
 import { LoginComponent } from './components/pages/login/login.component';
+import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'produits', component: ProductsPageComponent },
   { path: 'recherche/:rechercheTerm', component: ProductsPageComponent },
   { path: 'tag/:tag', component: ProductsPageComponent },
-  { path: 'produit/:id', component: ProductPageComponent },
+  { path: 'produits/:id', component: ProductPageComponent },
   { path: 'panier', component: CartComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterPageComponent },
+  
   // { path: 'service/:id', component: ServicePageComponent }
+  // { path: 'services/', component: ServicesPageComponent }
+
 ];
 
 @NgModule({

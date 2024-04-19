@@ -171,7 +171,7 @@
 
      ```typescript
      product!: Product;
-     // La variable product est déclarée avec le type Product. Le ! garantie que cette variable sera initialisée avant qu'elle soit utilisée
+     // La variable product est déclarée avec le type Product.
 
      // Le constructeur prend deux arguments : 
      constructor(activatedRoute: ActivatedRoute, productService: ProductService) {
@@ -372,10 +372,10 @@
    VIII. Création de server.ts.
 
    IX. Installation de ts-node et nodemon :
-       ```
+       
        npm install ts-node --save-dev
        npm install nodemon --save-dev
-       ```
+       
 
    X. Ajout de notre configuration `start` dans le fichier package.json :
       ```json
@@ -401,24 +401,26 @@
       ![api-products-navigateur-json](/assets/api-products-navigateur-json.png) 
       Nos Produits sont bien là au format JSON 😀 (malgré qu'on ne voit que le T-Shirt sur la capture d'écran)
 
-   XI. Ajout du fichier `urls.ts` au frontend dans un dossier `constants`.
-       - Déclaration de nos routes API dans ce fichier.
+   - Ajout du fichier `urls.ts` au frontend dans un dossier `constants`.
+      - Déclaration de nos routes API dans ce fichier.
 
-   XII. Ajout du module HttpClient :
-        - Dans le fichier `app.module.ts`, import de `HttpClientModule`.
+   - Ajout du module HttpClient :
+      - Dans le fichier `app.module.ts`, import de `HttpClientModule`.
 
-   XIII. Modification de productService.
+   - Modification de productService.
 
   # Login
   1. Générer le component `ng g c components/pages/login`
-    I. Ajouter la route : `{ path: 'connexion', component: LoginComponent }`
-    II. TS : 
-    III. Import du Reactive Forms Module dans `app.module.ts`.
+    - Ajouter la route : `{ path: 'connexion', component: LoginComponent }`
+    - TS : 
+    - Import du Reactive Forms Module dans `app.module.ts`.
   2. Login API POST request
     - Endpoint API pour la fonctionnalité de connexion des utilisateurs :
     ![server-api-user-login-post-jwt](/assets/server-api-user-login-post-jwt.png)
-    II. Ajout du JWT : `npm install jsonwebtoken`
-    III. Test avec Postman : ![postman-login-1](/assets/postman-login-1.png)
+    - Ajout du package JWT : `npm install jsonwebtoken` 
+    - Test avec Postman : 
+    ![postman-login-1](/assets/postman-login-1.png)
+    
     Les données de l'utilisateur sont là ainsi que le token 🤩
 
 ## Générer un Service User `ng g s services/user`
@@ -524,8 +526,10 @@ Bouton pour soumettre le formulaire de connexion.
 #### Résultat avec du CSS 
 ![login-navigateur-part1](/assets/login-navigateur-part1_9lk0vr8j8.png)
 - Test des validators :
+
 ![login-navigateur-validators-part1](/assets/login-navigateur-validators-part1.png)
 - Test de la connexion avec l'un des emails de sample_users :
+
 ![connexion-success-toast](/assets/connexion-success-toast.png)
 Le résultat attendu est là 😉
 
@@ -571,60 +575,60 @@ Bien que la sécurité dépende de plusieurs facteurs, une validation côté cli
   ```
 #### Input Validation
   - `ng g c components/partials/input-validation`
-    - TS : 
-    ```typescript
-    // Un objet contenant les messages d'erreur lié a chaque type de validation
-    const VALIDATORS_MESSAGES: any = {
-      required: 'Ne pas laisser vide',
-      email: 'l\'Email n\'est pas valide'
-    } 
+  - TS : 
+  ```typescript
+  // Un objet contenant les messages d'erreur lié a chaque type de validation
+  const VALIDATORS_MESSAGES: any = {
+    required: 'Ne pas laisser vide',
+    email: 'l\'Email n\'est pas valide'
+  } 
 
-    // Cet Input reçoit un contrôle de formulaire depuis le composant parent
-    @Input()
-    control!: AbstractControl;
+  // Cet Input reçoit un contrôle de formulaire depuis le composant parent
+  @Input()
+  control!: AbstractControl;
 
-    // Indique si les erreurs doivent être affichées, il est true par défaut
-    @Input()
-    showErrorsWhen: boolean = true;
-    // Un tableau pour les messages d'erreur lié au contrôle de formulaire
-    errorMessages: string[] = [];
+  // Indique si les erreurs doivent être affichées, il est true par défaut
+  @Input()
+  showErrorsWhen: boolean = true;
+  // Un tableau pour les messages d'erreur lié au contrôle de formulaire
+  errorMessages: string[] = [];
 
-    // Cette méthode vérifie les erreurs de validation du formulaire. 
-    // Si des erreurs sont présentes, elle les stocke dans errorMessages en utilisant les clés d'erreur pour trouver les messages correspondants dans VALIDATORS_MESSAGES. 
-    // Si aucune erreur n'est détectée, le tableau d'erreurs est vidé.
-    checkValidation(){
-      const errors = this.control.errors;
-      if (!errors){
-        this.errorMessages = [];
-        return;
-      }
-      const errorKeys = Object.keys(errors);
-      this.errorMessages = errorKeys.map(key => VALIDATORS_MESSAGES[key]);
+  // Cette méthode vérifie les erreurs de validation du formulaire. 
+  // Si des erreurs sont présentes, elle les stocke dans errorMessages en utilisant les clés d'erreur pour trouver les messages correspondants dans VALIDATORS_MESSAGES. 
+  // Si aucune erreur n'est détectée, le tableau d'erreurs est vidé.
+  checkValidation(){
+    const errors = this.control.errors;
+    if (!errors){
+      this.errorMessages = [];
+      return;
     }
-    ```
+    const errorKeys = Object.keys(errors);
+    this.errorMessages = errorKeys.map(key => VALIDATORS_MESSAGES[key]);
+  }
+  ```
 
-    
-    ```typescript
-    // ngOnInit = fonction appelée une fois lors de la création du composant. 
-    // Elle sert ici à mettre en place le suivi des changements dans le contrôle de formulaire
-    ngOnInit(): void {
-      this.control.statusChanges.subscribe(() =>{
-        this.checkValidation();
-      });
-      this.control.valueChanges.subscribe(() => {
-        this.checkValidation();
-      })
-    }
-    // ngOnChanges = fonction qui se déclenche chaque fois qu'une valeur d'entrée du composant change. 
-    // Au moment où la valeur du contrôle de formulaire change
-    ngOnChanges(changes: SimpleChanges): void {
-    this.checkValidation();
-    }
+  
+  ```typescript
+  // ngOnInit = fonction appelée une fois lors de la création du composant. 
+  // Elle sert ici à mettre en place le suivi des changements dans le contrôle de formulaire
+  ngOnInit(): void {
+    this.control.statusChanges.subscribe(() =>{
+      this.checkValidation();
+    });
+    this.control.valueChanges.subscribe(() => {
+      this.checkValidation();
+    })
+  }
+  // ngOnChanges = fonction qui se déclenche chaque fois qu'une valeur d'entrée du composant change. 
+  // Au moment où la valeur du contrôle de formulaire change
+  ngOnChanges(changes: SimpleChanges): void {
+  this.checkValidation();
+  }
 
-    // Résumé :  je m'abonne aux changements du contrôle de formulaire. 
-    // Chaque fois que quelque chose change dans ce contrôle je vérifie les erreurs de validation avec checkValidation 
-    ```
-    - HTML :
+  // Résumé :  je m'abonne aux changements du contrôle de formulaire. 
+  // Chaque fois que quelque chose change dans ce contrôle je vérifie les erreurs de validation avec checkValidation 
+  ```
+  - HTML :
     ```html
       <div class="error-list" *ngIf="errorMessages && showErrorsWhen">
         <div *ngFor="let errorMessages of errorMessages">
@@ -633,11 +637,467 @@ Bien que la sécurité dépende de plusieurs facteurs, une validation côté cli
       </div>
     ```
     - Modification du `login.component.html`
+
     ![login-compo-html-email-input-validation](/assets/login-compo-html-email-input-validation.png)
     - Résultat (Uniquement sur le champ email pour l'instant ref: couleur) :
+
     ![input-validation-compo-email-navigateur](/assets/input-validation-compo-email-navigateur.png)
     - Combiné les Input avec le nom de text-input : 
     - `ng g c components/partials/text-input`
 
-- Text Input 
-- Boutton par défaut
+#### Text Input 
+  - `ng g c components/partials/text-input`
+  - TS 
+  ```typescript
+  @Input()
+  control!: AbstractControl;
+
+  @Input()
+  showErrorsWhen: boolean = true;
+
+  @Input()
+  label!: string;
+
+  @Input()
+  type: 'text' | 'password' | 'email' = 'text';
+
+  get formControl() {
+    return this.control as FormControl;
+  }
+  ```
+  - HTML 
+  ```html
+  <input-container [label]="label">
+    <input [type]="type" [placeholder]="label" [formControl]="formControl"/>
+    <input-validation [control]="control" [showErrorsWhen]="showErrorsWhen">
+    </input-validation>
+  </input-container>
+  ``` 
+
+  - Gros changement dans `login.component.html` :
+
+  ![login-compo-html-text-input](/assets/login-compo-html-text-input.png)
+  - Résultat avec du CSS : 
+
+  ![login-form-navigateur](/assets/login-form-navigateur.png)
+
+### Boutton par défaut 
+- `ng g c components/partials/default-button`
+- TS 
+```typescript
+  @Input()
+  type: 'submit' | 'button' = 'submit';
+  @Input()
+  text: string = 'Submit';
+  @Input()
+  bgColor = 'wheat';
+  @Input()
+  color = 'black'
+  @Input()
+  fontSizeRem = 1.3;
+  @Input()
+  widthRem = 12;
+  @Output()
+  onClick = new EventEmitter();
+  ```
+  - HTML
+  ```html
+  <div class="container">
+    <button
+    [ngStyle]="{
+        color: color,
+        'background-color': bgColor,
+        'font-size.rem': fontSizeRem,
+        'width.rem': widthRem
+    }"
+    [type]="type"
+    (click)="onClick.emit()"
+    >
+    {{ text }}
+    </button>
+  </div>
+  ```
+  - Résultat avec du CSS :
+
+![login-navigateur-button](/assets/login-navigateur-button.png)
+
+# MongoDB Atlas 🥭
+## Connexion API Login à MongoDB
+  - Modifier les API's en routers
+    - Création du dossier `routers`
+    - A l'intérieur du fichier `product.router.ts`
+    - Récupérer toutes les endpoint API's et les déplacer dans leur fichier approprié ex: `product.router.ts`
+    - le fichier `server.ts` le fichier est plus propre et aéré
+  - MongoDB Atlas
+    - Connexion
+  - Création d'un fichier `.env` dans le dossier `src`
+## Installation de 
+ - mongoose
+ - dotenv
+ - bcryptjs
+ - jsonwebtoken
+ - express-async-handler
+## Connexion à MongoDB Atlas
+- fichier `.env` contenant l'URI MongoDB
+- fichier `database.config.ts` : 
+  ```typescript
+  import { connect, ConnectOptions } from 'mongoose';
+
+  // Fonction pour établir une connexion à la base de données MongoDB
+  export const dbConnect = () => {
+      // Connexion à l'URI MongoDB spécifiée dans les variables d'environnement
+      connect(process.env.MONGO_URI!, {
+          useNewUrlParser: true, // Utilisation du nouveau moteur de lecture d'URL MongoDB
+          useUnifiedTopology: true // Utilisation du nouveau moteur de surveillance du serveur MongoDB
+      } as ConnectOptions)
+      .then(
+          () => console.log('Connexion réussie à la base de données'), // Message de succès en cas de connexion réussie
+          (error) => console.log(error) // Affichage de l'erreur en cas d'échec de la connexion
+      );
+  }
+  ```
+## Utilisation des donées MongoDB au lieu de data.ts, API's
+- fichier `product.model.ts` :
+```typescript
+  import { model, Schema } from 'mongoose';
+// Définition de l'interface Product pour structurer les données
+export interface Product {
+    id: string;
+    name: string;
+    price: number;
+    favorite: boolean;
+    stars: number;
+    imageUrl: string;
+    categorys: string[];
+    description: string;
+    state: string[];
+    material: string[];
+    service: string[];
+    tags: string[];
+}
+
+// Création du schéma ProductSchema avec les propriétés définies dans l'interface Product
+export const ProductSchema = new Schema<Product>(
+    {
+        name: { type: String, required: true }, 
+        price: { type: Number, required: true }, 
+        favorite: { type: Boolean, default: false }, 
+        stars: { type: Number, required: true }, 
+        imageUrl: { type: String, required: true }, 
+        categorys: { type: [String], required: true },
+        description: { type: String, required: true }, 
+        state: { type: [String], required: true },  
+        material: { type: [String], required: true },
+        service: { type: [String], required: true }, 
+        tags: { type: [String] }
+    },
+    // L'option virtuals: 
+    // Le schéma indique à Mongoose d'inclure toutes les propriétés virtuelles définies dans le schéma lors de la sérialisation ou de la conversion.
+    {
+        toJSON: {
+            virtuals: true // Inclure les propriétés virtuelles lors de la sérialisation en JSON
+        },
+        toObject: {
+            virtuals: true // Inclure les propriétés virtuelles lors de la conversion en objet
+        },
+        timestamps: true // Ajouter automatiquement les horodatages createdAt et updatedAt
+    }
+);
+
+// Création du modèle ProductModel basé sur le schéma ProductSchema
+export const ProductModel = model<Product>('product', ProductSchema);
+```
+
+-  fichier `product.router.ts` :
+```typescript
+import { Router } from "express";
+import { sample_products, sample_tags } from "../data";
+import asyncHandler from 'express-async-handler';
+import { ProductModel } from "../models/product.model";
+
+const router = Router();
+
+// Route d'initialisation de mes données d'échantillion, les données sont insérés en BDD
+router.get("/seed", asyncHandler(
+    async (req, res) => {
+        const productsCount = await ProductModel.countDocuments();
+        if (productsCount > 0){
+            res.send("L'initialisation est déjà effectuée")
+            return;
+        }
+        await ProductModel.create(sample_products);
+        res.send("L'initialisation est effectuée")
+    }
+))
+
+// Route API de tous les produits
+router.get("/", asyncHandler(
+    async (req, res) => {
+        const products = await ProductModel.find();
+        res.send(products);
+    }
+))
+
+// Route API pour la recherche des produits
+router.get("/recherche/:searchTerm",asyncHandler(
+    async (req, res) => {
+        const searchRegex = new RegExp(req.params.searchTerm, 'i')
+        const products = await ProductModel.find({name: { $regex:searchRegex }})
+        res.send(products);
+    }
+))
+
+// Route API de tous les tags
+router.get("/tags", asyncHandler(
+    async (req, res) => {
+        const tags = await ProductModel.aggregate([
+            {
+                $unwind: '$tags'
+            },
+            {
+                $group:{
+                    _id: '$tags',
+                    count: {$sum: 1}
+                }
+            },
+            {
+                $project:{
+                    _id: 0,
+                    name: '$_id',
+                    count: '$count'
+                }
+            }
+        ]).sort({count: -1});
+
+        const all = {
+            name: 'Tous',
+            count: await ProductModel.countDocuments()
+        }
+        
+        tags.unshift(all);
+        res.send(tags);
+    }
+    // $unwind, groupe les tags 
+))
+
+// Route des produits spécifique à leur tags associés 
+router.get("/tag/:tagName", asyncHandler(
+    async (req, res) => {
+        const products = await ProductModel.find({ tags: req.params.tagName })
+        res.send(products);
+}
+))
+
+// Route du single produit référé à son ID
+router.get("/:produitId", asyncHandler(
+    async (req, res) =>{
+        const product = await ProductModel.findById(req.params.produitId);
+        res.send(product); // ENvois au client
+    }
+))
+
+export default router;
+```
+
+- asyncHandler permet de gérer de manière asynchrone les erreurs dans les gestionnaires de route express, il facilite la gestion des promesses et des erreurs dans les routes asynchrones.
+-  UserModel inclus le modèle d'un utilisateur défini dans l'application qui est utilisé pour interagir avec la collection d'utilisateurs dans la BDD MongoDB.
+
+# Page Inscription
+## Inscription Utilisateur
+- API Inscription
+  - dans le fichier `user.router.ts` création d'une requete post à `/register`
+  ```typescript 
+    router.post('/register', asyncHandler(
+    async (req, res) => {
+        // Extraction des champs du corps de la requête
+        const {name, email, password, address} = req.body;
+
+        // Recherche un utilisateur avec l'email fourni dans la base de données
+        const user = await UserModel.findOne({email});
+
+        // Vérification si un utilisateur avec cet email existe déjà
+        if (user){
+            // Si un utilisateur avec cet email existe déjà renvoie ce message
+            res.status(HTTP_BAD_REQUEST)
+            .send("Un utilisateur du meme email existe déjà.");
+            return;
+        }
+        
+        // Hashage du mot de passe 
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Création d'un nouvel utilisateur avec les informations fournies
+        const newUser: User = {
+            id: '',
+            name,
+            email: email.toLowerCase(),
+            password: encryptedPassword,
+            address,
+            isAdmin: false
+        }
+
+        // Enregistrement du nouvel utilisateur dans la base de données
+        const dbUser = await UserModel.create(newUser);
+
+        // Envoi de la réponse avec le token d'authentification généré pour le nouvel utilisateur
+        res.send(generateTokenResponse(dbUser));
+    }
+  ))
+  ```
+- Méthode Service Inscription
+  - Création d'une Interface IUserRegister : 
+  ```typescript 
+    export interface IUserRegister{
+      name: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+      address: string;
+    }
+  ``` 
+  - Dans le fichier Service User : 
+  ```typescript
+    register(userRegister: IUserRegister): Observable<User>{
+    // Appel HTTP POST pour enregistrer un nouvel utilisateur
+    return this.http.post<User>(USER_REGISTER_URL, userRegister).pipe(
+      // Utilisation de l'opérateur tap pour effectuer des actions 
+      tap({
+        // Si l'appel réussit cette fonction est exécutée
+        next: (user) => {
+          // Stockage de l'utilisateur dans le localStorage 
+          this.setUserToLocalStrorage(user);
+          // MAJ du userSubject avec le nouvel utilisateur
+          this.userSubject.next(user);
+          this.toastrService.success(
+            `Bienvenue à Sunny Laundry ${user.name}, connectez vous au plus vite ! 🌞`,
+            'Inscription Réussie'
+          )
+        },
+        error: (errorResponse) => {
+          this.toastrService.error(errorResponse.error,
+            'Inscription Non Réussie')
+        }
+      })
+    )
+  }
+  ``` 
+- Lien Inscription
+ - une nouvelle route est ajouté à l'application : `/register`
+- Composant Inscription : 
+   - TS : 
+ ```typescript 
+  export class RegisterPageComponent implements OnInit {
+
+  registerForm!: FormGroup;
+  isSubmitted = false;
+
+  returnUrl = '';
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    // Création du formulaire avec champs et validators
+    this.registerForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPassword:['', [Validators.required]],
+      address: ['', [Validators.required, Validators.minLength(4)]]
+    },{
+      // Validation pour s'assurer que les mots de passe correspondent
+      validators: PasswordsMatchValidator('password', 'confirmPassword')
+    })
+
+    // Récupère l'URL de retour du paramètre query
+    this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
+  }
+
+  // Récupere des contrôles de formulaire pour un accès facile dans le template
+  get fc() {
+    return this.registerForm.controls;
+  }
+
+  // Submit du formulaire
+  submit(){
+    this.isSubmitted = true;
+    if (this.registerForm.invalid) return;
+
+    // Création de l'objet user à partir des valeurs du formulaire (fv)
+    const fv = this.registerForm.value;
+    const user: IUserRegister = {
+      name: fv.name,
+      email: fv.email,
+      password: fv.password,
+      confirmPassword: fv.confirmPassword,
+      address: fv.address
+    };
+
+    // Appel du service pour enregistrer le user
+    this.userService.register(user).subscribe(_ => {
+      // Redirection vers l'URL de retour après l'enregistrement réussi
+      this.router.navigateByUrl(this.returnUrl)
+    })
+  }
+}
+```
+- HTML : 
+ ```html
+  <div class="container">
+    <div class="details">
+        <app-title title="Inscription"></app-title>
+        <form [formGroup]="registerForm" (ngSubmit)="submit()">
+            <text-input
+            [control]="fc.name"
+            [showErrorsWhen]="isSubmitted"
+            label="Nom"
+            ></text-input>
+
+            <text-input
+            [control]="fc.email"
+            [showErrorsWhen]="isSubmitted"
+            label="Email"
+            type="email"
+            ></text-input>
+
+            <text-input
+            [control]="fc.password"
+            [showErrorsWhen]="isSubmitted"
+            label="Mot de passe"
+            type="password"
+            ></text-input>
+
+            <text-input
+            [control]="fc.confirmPassword"
+            [showErrorsWhen]="isSubmitted"
+            label="Confirmer Mot de passe"
+            type="password"
+            ></text-input>
+
+            <text-input
+            [control]="fc.address"
+            [showErrorsWhen]="isSubmitted"
+            label="Adresse"
+            ></text-input>
+
+            <default-button text="Inscription"></default-button>
+            <div class="login">
+                Déjà Inscrit ? &nbsp;
+                <a routerLink="/login" [queryParams]="{returnUrl: returnUrl}">
+                    Se Connecter
+                </a>
+            </div>
+        </form>
+    </div>
+  </div>
+ ```
+
+# Page Commaande
+- 
+
+  
+

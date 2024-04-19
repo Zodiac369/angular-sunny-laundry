@@ -8,7 +8,7 @@
 ></app-not-found>
 <ul>
     <li *ngFor="let product of products">
-        <a routerLink="/produit/{{ product.id }}">
+        <a routerLink="/produits/{{ product.id }}">
             <img [src]="product.imageUrl" [alt]="product.name"/>
             <div class="content">
                 <div class="name">

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../shared/models/Product';
-import { sample_products, sample_tags } from 'src/data';
 import { Tag } from '../shared/models/Tag';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PRODUCT_BY_ID_URL, PRODUCTS_BY_SEARCH_URL, PRODUCTS_BY_TAG_URL, PRODUCTS_TAGS_URL, PRODUCTS_URL } from '../shared/constants/urls';
+import { PRODUCTS_BY_ID_URL, PRODUCTS_BY_SEARCH_URL, PRODUCTS_BY_TAG_URL, PRODUCTS_TAGS_URL, PRODUCTS_URL } from '../shared/constants/urls';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class ProductService {
     return this.http.get<Product[]>(PRODUCTS_URL);
   }
   
-  getAllProductsSearchTerm(searchTerm:string) { 
+  getAllProductsSearchTerm(searchTerm: string) { 
     return this.http.get<Product[]>(PRODUCTS_BY_SEARCH_URL + searchTerm);
   }
 
@@ -32,7 +31,7 @@ export class ProductService {
   } 
 
   getProductById(productId: string): Observable<Product[]>{
-    return this.http.get<Product[]>(PRODUCT_BY_ID_URL + productId);
+    return this.http.get<Product[]>(PRODUCTS_BY_ID_URL + productId);
   }
 
 }
