@@ -45,7 +45,7 @@ a span{
 
 .menu{
     position: absolute;
-    z-index: 1;
+    z-index: 1000;
     background: rgb(183, 171, 142);
     display: none;
     border-radius: 10%;

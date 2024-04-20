@@ -7,6 +7,7 @@ import { ProductsPageComponent } from './components/pages/products-page/products
 import { LoginComponent } from './components/pages/login/login.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'panier', component: CartComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'checkout', component: CheckoutPageComponent },
+  { path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuard] },
   // { path: 'service/:id', component: ServicePageComponent }
   // { path: 'services/', component: ServicesPageComponent }
 

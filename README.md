@@ -1109,6 +1109,17 @@ export default router;
 - Ajout du User au `Service User`
 - Ajout du Panier au `Serice Panier`
 - Création du composant `Order Items List`
+- Ajout d'une carte sur la Checkout Page
+  - Installation du package Leaflet 
+    - Installation du @types/leaflet
+    - Ajouter le chemin leaflet.css au styles dans le fichier `angular.json`
+  - Ajout de `AdressLatLng` du type LatLng au `Order Model`
+  - Création du composant Map
+    - Ajouter à la `Checkout Page`
+    - TS
+      - Modification du selector app-map à map 
+    - HTML-CSS
+  - Ajout du Auth Guard 
 
 
 
