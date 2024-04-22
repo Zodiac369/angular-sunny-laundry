@@ -10,11 +10,6 @@
           <a routerLink="/">Accueil</a>
           <a routerLink="/produits">Nos Produits</a>
         </li>
-        <li>
-          <a routerLink="/panier">
-            Panier <span *ngIf="cartQuantity">{{ cartQuantity }}</span>
-          </a>
-        </li>
         <li *ngIf="isAuth" class="menu-container">
           <a routerLink="/dashboard">{{ user.name }}</a>
           <div class="menu">
@@ -22,6 +17,11 @@
             <a routerLink="/orders">Commandes</a>
             <a routerLink="/produits" (click)="logout()">Déconnexion</a>
           </div>
+        </li>
+        <li>
+          <a routerLink="/panier">
+            Panier <span *ngIf="cartQuantity">{{ cartQuantity }}</span>
+          </a>
         </li>
       </ul>
     </nav>

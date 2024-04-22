@@ -1,21 +1,30 @@
 <div class="container">
     <div class="content">
         <app-title title="Récapitulatif de commande" fontSize="1.6rem"></app-title>
+        
+        <!-- Formulaire de paiement avec les champs nom et adresse -->
         <form [formGroup]="checkoutForm">
-        <text-input [control]="fc.name" label="Nom"></text-input>
-        <text-input [control]="fc.address" label="Adresse"></text-input>
-
+            <text-input [control]="fc.name" label="Nom"></text-input>
+            <text-input [control]="fc.address" label="Adresse"></text-input>
         </form>
+        
+        <!-- Composant 'order-items-list' pour afficher les articles de la commande -->
         <order-items-list [order]="order"></order-items-list>
     </div>
+    
+    <!-- Section de carte -->
     <div class="map">
-        <app-title title="Sélectionnez votre emplacement sur la carte"
-        fontSize="1.6rem"
-        ></app-title>
+        <!-- Composant 'app-title' pour afficher le titre "Sélectionnez votre emplacement sur la carte" -->
+        <app-title title="Sélectionnez votre emplacement sur la carte" fontSize="1.6rem"></app-title>
+        
+        <!-- Composant 'map' pour afficher une carte interactive -->
         <map [order]="order"></map>
     </div>
+    
+    <!-- Section des boutons d'action -->
     <div class="buttons-container">
         <div class="buttons">
+            <!-- Bouton pour procéder au paiement, qui appelle la méthode 'createOrder()' -->
             <button (click)="createOrder()">
                 Procéder au Paiement
             </button>

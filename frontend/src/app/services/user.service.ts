@@ -12,7 +12,7 @@ const USER_KEY = 'User';
   providedIn: 'root'
 })
 export class UserService {
-  private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStoeage());
+  private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
   public userObservable: Observable<User>;
 
   constructor(private http: HttpClient, private toastrService: ToastrService) {
@@ -57,7 +57,7 @@ register(userRegister: IUserRegister): Observable<User>{
         // MAJ du userSubject avec le nouvel utilisateur
         this.userSubject.next(user);
         this.toastrService.success(
-          `Bienvenue à Sunny Laundry ${user.name}, connectez vous au plus vite ! 🌞`,
+          `Bienvenue chez Sunny Laundry ${user.name} 🌞`,
           'Inscription Réussie'
         )
       },
@@ -80,7 +80,7 @@ register(userRegister: IUserRegister): Observable<User>{
     localStorage.setItem(USER_KEY, JSON.stringify(user)); // Convertit avant de stocker
   }
 
-  private getUserFromLocalStoeage(): User {
+  private getUserFromLocalStorage(): User {
     const userJson = localStorage.getItem(USER_KEY); // Récupère les infos du localStorage
     if(userJson) return JSON.parse(userJson) as User; // Si valeur trouvé, parse en Jjson et la retorune en tant qu'objet User
     return new User(); // Si aucune valeur ou erreur elle retourne un objet user vide 

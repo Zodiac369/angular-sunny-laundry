@@ -6,11 +6,9 @@ import cors from 'cors';
 
 import productRouter from './routers/product.router';
 import userRouter from './routers/user.router';
+import orderRouter from './routers/order.router';
 import { dbConnect } from './configs/database.config';
 dbConnect();
-
-// NOTE req : C'est l'objet "request" (requête) qui représente les données envoyées par le client au serveur lorsqu'une requête HTTP est effectuée.
-// NOTE res :  C'est l'objet "response" (réponse) qui est utilisé pour renvoyer une réponse HTTP du serveur au client après avoir traité une requête.
 
 const app = express(); // Importation du module Express
 app.use(express.json());
@@ -22,6 +20,8 @@ app.use(cors({
 // NOS API'S
 app.use("/api/produits", productRouter)
 app.use("/api/users", userRouter)
+app.use("/api/orders", orderRouter)
+
 
 // Port Serveur
 const port = 5000;

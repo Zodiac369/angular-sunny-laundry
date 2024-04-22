@@ -1102,26 +1102,144 @@ export default router;
   - Création de 2 méthodes, `showLoading` et `hideLoading()`
 - Ajout de l'intercepteur `loading`
 
-# Page Commande
-- Création du `Model Order`
+# Page Checkout
+- Création du `Model Order` 
+  ```typescript 
+  export class Order {
+    id!: number;
+    items!: CartItem[];
+    totalPrice!: number;
+    name!: string
+    address!: string;
+    paymentId!: string;
+    createdAt!: string;
+    status!: string;
+  }
+  ```
 - Création du composant `Checkout Page`
-  - Ajout de la route
-- Ajout du User au `Service User`
-- Ajout du Panier au `Serice Panier`
+  - Ajout de la route `checkout`
+  - Injection de dépendances du `Service User` et `Serice Panier`
 - Création du composant `Order Items List`
+ - Rendu avec HTML&CSS : 
+ ![page-checkout-order-items-navigateur](/assets/page-checkout-order-items-navigateur.png)
+ - les champs sont déjà remplis si l'utilsateur est connecté grace à la métode ngOnInit :
+    ```typescript
+    ngOnInit(): void {
+    // Récupération des informations utilisateur pour pré-remplir le formulaire
+      let {name, address} = this.userService.currentUser;
+    // Création du formulaire avec pré-remplissage des champs nom et adresse
+      this.checkoutForm = this.formBuilder.group({
+        name: [name, Validators.required],
+        address: [address, Validators.required]
+      });
+    }
+    ``` 
 - Ajout d'une carte sur la Checkout Page
   - Installation du package Leaflet 
-    - Installation du @types/leaflet
+   (leaflet est une bibliothèque JS open-source utilisée pour créer des cartes interactives)
+    - Installation de @types/leaflet
     - Ajouter le chemin leaflet.css au styles dans le fichier `angular.json`
   - Ajout de `AdressLatLng` du type LatLng au `Order Model`
   - Création du composant Map
-    - Ajouter à la `Checkout Page`
-    - TS
-      - Modification du selector app-map à map 
-    - HTML-CSS
-  - Ajout du Auth Guard 
+    - Modification du selector `app-map` à `map` 
+    - Ajouter le selector `map` au fichier HTML `Checkout Page`
+    - Création du `Location Service`
+      - méthode `getCurrentLocation()` retourne un Observable qui trasmet la position géographique actuelle de l'utilisateur sous forme d'objet LatLngLiteral de Leaflet. Utilisant la fonctionnalité de géolocalisation du navigateur pour obtenir cette position 
+      ```typescript 
+      getCurrentLocation(): Observable<LatLngLiteral>{
+        return new Observable((observer) => {
+          // Vérifie si la géolocalisation est prise en charge par le navigateur
+          if(!navigator.geolocation) return;
 
+          // Utilise la méthode getCurrentPosition() du navigateur pour obtenir la position actuelle de l'utilisateur
+          return navigator.geolocation.getCurrentPosition(
+            // En cas de succès émet la position sous forme d'objet LatLngLiteral
+            (pos) => {
+              observer.next({
+                lat: pos.coords.latitude, 
+                lng: pos.coords.longitude 
+              })
+            },
+            // En cas d'erreur
+            (error) => {
+              observer.error(error);
+            }
+          )
+        })
+      }
+      ```
+    - TS (ref `code map.component.ts`)
+    - Rendu HTML&CSS : 
+    ![checkout-page-map](/assets/checkout-page-map.png)
+  - Ajout du Auth Guard :
+  - Création du auth guard `ng g guard auth/guards/auth`
+  - Ajouter l'auth guard à la page `chekcout` dans le fichier Route.
+    - `{ path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuard] },`
+    - Injection de deux dépendances dans le constructor : 
+    `constructor(private userService: UserService, private router: Router)`
+    - Méthode `canActivate()`  vérifie si l'utilisateur est autorisé à accéder à la route
+    ```typescript
+    canActivate(
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+      // Vérifie si un token d'authentification est présent dans l'objet currentUser du service UserService
+      if(this.userService.currentUser.token) return true;
+    
+      // Si l'utilisateur n'est pas authentifié, redirige vers la page de connexion avec un paramètre returnUrl
+      this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+    
+      // Retourne false pour bloquer l'accès à la route actuelle
+      return false;
+    }
+    ```
+# Création de la Commande coté Back
+## Backend
+- Sauvegarder la Commande
+  - Création du Model Order
+  - Ajouter les status Enum
+    ```typescript
+    export enum OrderStatus {
+      PROCESSING = 'EN COURS',
+      PAYED = 'PAYÉ',
+      READY = 'PRÊT',
+      CANCELED = 'ANNULÉ',
+      REFUNDED = 'REMBOURSÉ'
+    }
+    ```
+  - Création de l'auth Middleware
+    - Dans un dossier middlewares, un fichier `auth.mid.ts`
+    Ce middleware vérifie la présence et la validité d'un token JWT dans les en-têtes de requête. 
+    Si présent et valide il le décode et rend les informations de l'utilisateur disponibles pour les routes ultérieures via l'objet de requête (req.user). 
+    Si absence ou invalidité du token il renvoie la réponse HTTP_UNAUTHORIZED.
+  - Order Router :
+    - fichier `order.router.ts`
+    - Création du endpoint API `/orders` dans le fichier `server.ts` tout comme les `produits` et `users`
+    - Requete POST pour la création d'une nouvelle commande, le endpoit `'/api/orders/create'` 
+    - Ce fichier crée une route POST pour la création de commandes. 
+    Il vérifie d'abord les tokens JWT extrait les données de la commande du corps de la requête, vérifie si le panier est vide, supprime les commandes en cours pour l'utilisateur, puis crée une nouvelle commande avec les données fournies et renvoie les détails de la commande.
+  - Ajout des URL's Order à `urls.ts`
+      - `export const ORDERS_URL = BASE_URL + '/api/orders';`
+      - `export const ORDER_CREATE_URL = ORDERS_URL + '/create';`
+  - Création du `Order Service`
+    - Méthode `createOrder()` 
+    - Crée une nouvelle commande après avoir vérifié la validité du formulaire et la localisation de l'utilisateur sur la carte. 
+    Elle assigne les valeurs du formulaire à la commande et utilise le Order Service pour la créer. 
+    En cas de succès l'utilisateur est redirigé vers la page de paiement sinon un message d'erreur est affiché.
+  - Ajout de l'interceptor Auth  
+  - `auth.interceptor.ts`
+  - Cet intercepteur HTTP ajoute un token d'authentification aux en-têtes des requêtes sortantes. Il récupère les informations de l'utilisateur et, s'il existe un token, l'ajoute aux en-têtes de la requête. Ensuite, la requête modifiée est transmise au prochain intercepteur ou au gestionnaire HTTP.
+  - Résultat : 
+  ![order-receive-network-200](/assets/order-receive-network-200.png)
+  - Sur MongoDB : 
+  ![mongofb-orders](/assets/mongofb-orders.png)
 
-
-  
-
+# Page Paiement
+- Composant `payment-page`
+  - Route `payment` dont le `AuthGuard`
+- Méthode GET `getOrderForCurrentUser` au endpoint `/newOrderForCurrentUser`
+  - fichier `urls.ts` :
+    - `export const ORDER_NEW_FOR_CURRENT_URL = ORDERS_URL + '/newOrderForCurrentUser';`
+- Méthode `getNewOrderForCurrentUser()` dans le Service Order
+- Connexion du Composant au Service
+- Composant Map readonly
